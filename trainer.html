@@ -30,6 +30,7 @@
 			text-align: left;
 			display: none;
 			cursor: pointer;
+			margin-bottom: 10px;
 		}
 		#source-typed {
 			background-color: cyan;
@@ -79,7 +80,8 @@
 			}
 			source.value = source.value
 				.replace(/’/g, "'")
-				.replace(/[“”]/g, '"');
+				.replace(/[“”]/g, '"')
+				.trim();
 			inp.value = '';
 			source.style.display = 'none';
 			sourceView.style.display = 'block';
@@ -104,6 +106,7 @@
 		});
 		
 		function hightlightCurrentInput() {
+			console.log(inp.value.length, source.value.length);
 			let lastMatch = -1;
 			while(lastMatch <= inp.value.length && source.value[lastMatch] === inp.value[lastMatch]) {
 				lastMatch++;
