@@ -64,6 +64,18 @@
 		#page.success #word-counter {
 			display: block;
 		}
+		#firework {
+			display: none;
+			position: absolute;
+			left: 50%;
+			top: 0px;
+			margin-left: -180px;
+			height: 200px;
+			opacity: 0.4;
+		}
+		#page.success #firework {
+			display: block;
+		}
 	</style>
 	<link rel="icon" type="image/x-icon" href="data:image/png;base64,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"
 </head>
@@ -76,6 +88,7 @@
 		<section class="layout">
 			<img class="success-img" src="success.png"/>
 			<img id="layout" src="layout_eng.png"/>
+			<img id="firework" src="firework.gif"/>
 			<img class="success-img success-img--flip" src="success.png"/>
 			<div id="word-counter"></div>
 		</section>
@@ -88,6 +101,7 @@
 		const sourceView = document.getElementById("source-view");
 		const inp = document.getElementById("input");
 		const wordCounter = document.getElementById("word-counter");
+		const firework = document.getElementById("firework");
 		
 		source.addEventListener("keydown", (e) => {
 			if (e.keyCode !== 13) {
@@ -149,6 +163,7 @@
 			"<span id='source-typed'>" + source.value.substr(current).replace(/\n/g, "<br/>") + "</span>";
 			
 			wordCounter.innerHTML = current;
+			firework.style.opacity = Math.min(0.8, current/source.value.length);
 			
 			if (current < source.value.length) {
 				setTimeout(() => successHighlight(current + 1), 5);
