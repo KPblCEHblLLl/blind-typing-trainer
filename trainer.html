@@ -69,9 +69,9 @@
 			position: absolute;
 			left: 50%;
 			top: 0px;
-			margin-left: -180px;
+			margin-left: -242px;
 			height: 200px;
-			opacity: 0.4;
+			width: 485px;
 		}
 		#page.success #firework {
 			display: block;
@@ -163,7 +163,6 @@
 			"<span id='source-typed'>" + source.value.substr(current).replace(/\n/g, "<br/>") + "</span>";
 			
 			wordCounter.innerHTML = current;
-			firework.style.opacity = Math.min(0.8, current/source.value.length);
 			
 			if (current < source.value.length) {
 				setTimeout(() => successHighlight(current + 1), 5);
