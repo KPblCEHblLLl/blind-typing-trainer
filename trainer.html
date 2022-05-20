@@ -107,9 +107,15 @@
 			if (e.keyCode !== 13) {
 				return;
 			}
+			if (e.ctrlKey) {
+				source.value = source.value + '\n';
+				return;
+			}
+			
 			source.value = source.value
 				.replace(/’/g, "'")
 				.replace(/[“”]/g, '"')
+				.replace(/…/g, '...')
 				.trim();
 			inp.value = '';
 			source.style.display = 'none';
@@ -135,7 +141,6 @@
 		});
 		
 		function hightlightCurrentInput() {
-			console.log(inp.value.length, source.value.length);
 			let lastMatch = -1;
 			while(lastMatch <= inp.value.length && source.value[lastMatch] === inp.value[lastMatch]) {
 				lastMatch++;
