@@ -107,16 +107,19 @@
 			if (e.keyCode !== 13) {
 				return;
 			}
-			if (e.ctrlKey) {
+			if (e.shiftKey) {
 				source.value = source.value + '\n';
+				e.preventDefault();
 				return;
 			}
 			
 			source.value = source.value
+				.trim()
 				.replace(/’/g, "'")
 				.replace(/[“”]/g, '"')
 				.replace(/…/g, '...')
-				.trim();
+				.replace(/–/g, '-')
+				.split('\n').map(x => x.trim()).join('\n');
 			inp.value = '';
 			source.style.display = 'none';
 			sourceView.style.display = 'block';
@@ -139,6 +142,15 @@
 		inp.addEventListener("input", (e) => {
 			hightlightCurrentInput();
 		});
+		inp.addEventListener("keydown", (e) => {
+			if (e.keyCode === 32 && e.ctrlKey) {
+				console.log(1)
+				inp.value = inp.value + source.value.substr(inp.value.length, 1);
+				e.preventDefault();
+				hightlightCurrentInput();
+				return false;
+			}
+		});
 		
 		function hightlightCurrentInput() {
 			let lastMatch = -1;
@@ -156,7 +168,7 @@
 			}
 			
 			sourceView.innerHTML = "" + 
-			"<span id='source-typed'>" + source.value.substr(0, lastMatch).replace(/\n/g, "<br/>") + "</span>" + 
+			"<span id='source-typed'>" + source.value.substr(0, lastMatch).replace(/\n/g, "↩<br/>") + "</span>" + 
 			"<span id='source-error'>" + source.value.substr(lastMatch, errLength).replace(/\n/g, "<br/>") + "</span>" + 
 			"<span id='source-left'>" + source.value.substr(lastMatch + errLength).replace(/\n/g, "<br/>") + "</span>";
 		}
@@ -164,7 +176,7 @@
 		function successHighlight(current) {
 			current = current || 0;
 			sourceView.innerHTML = "" + 
-			"<span id='source-success'>" + source.value.substr(0, current).replace(/\n/g, "<br/>") + "</span>" + 
+			"<span id='source-success'>" + source.value.substr(0, current).replace(/\n/g, "↩<br/>") + "</span>" + 
 			"<span id='source-typed'>" + source.value.substr(current).replace(/\n/g, "<br/>") + "</span>";
 			
 			wordCounter.innerHTML = current;
@@ -185,6 +197,39 @@
 				}
 			});
 			setTimeout(doDance, 750);
+		}
+		
+		function generateNumbers() {
+			const signs = '$%&()[]@#*-+=_';
+			source.value = Array(10).fill(0)
+				.map(() => Array(10).fill(0)
+					.map(() => '' + 
+						signs[parseInt(Math.random() * signs.length)] +
+						(Math.random() * 100000).toFixed(2) + 
+						signs[parseInt(Math.random() * signs.length)]
+					)
+					.join(' ')
+				)
+				.join('\n')
+		}
+		
+		const presets = {
+			'digits': `
+				;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a
+				a01; a01; a01; a01; a01; a01; a01; a01; a01; a01;
+
+				l29s l29s l29s l29s l29s l29s l29s l29s l29s l29s
+				s92l s92l s92l s92l s92l s92l s92l s92l s92l s92l
+
+				k38d k38d k38d k38d k38d k38d k38d k38d k38d k38d
+				d83k d83k d83k d83k d83k d83k d83k d83k d83k d83k
+
+				j47f j47f j47f j47f j47f j47f j47f j47f j47f j47f
+				f74j f74j f74j f74j f74j f74j f74j f74j f74j f74j
+
+				h56g h56g h56g h56g h56g h56g h56g h56g h56g h56g
+				g65h g65h g65h g65h g65h g65h g65h g65h g65h g65h
+			`,
 		}
 		
 		window.addEventListener("load", () => source.focus());
