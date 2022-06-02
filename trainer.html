@@ -101,6 +101,8 @@
 			<div id="word-counter"></div>
 			<select id="preset-select">
 				<option value=''>&lt;pick preset&gt;</option>
+				<option value='train_numbers'>train numbers</option>
+				<option value='simple_numbers'>simple numbers</option>
 				<option value='hard_numbers'>hard numbers</option>
 			</select>
 		</section>
@@ -173,8 +175,14 @@
 		presetSelect.addEventListener("change", (e) => {
 			const preset = e.target.value;
 			switch (preset) {
+				case "train_numbers":
+					generateLearnNumbers();
+					break;
+				case "simple_numbers":
+					generateSimpleNumbers();
+					break;
 				case "hard_numbers":
-					generateNumbers();
+					generateHardNumbers();
 					break;
 			}
 			startTask();
@@ -227,8 +235,8 @@
 			setTimeout(doDance, 750);
 		}
 		
-		function generateNumbers() {
-			const signs = '$%&()[]@#*-+=_';
+		function generateHardNumbers() {
+			const signs = '$%&()[]@#*-+=_^';
 			source.value = Array(8).fill(0)
 				.map(() => Array(8).fill(0)
 					.map(() => '' + 
@@ -241,25 +249,40 @@
 				.join('\n\n')
 		}
 		
-		const presets = {
-			'digits': `
-				;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a ;10a
-				a01; a01; a01; a01; a01; a01; a01; a01; a01; a01;
-
-				l29s l29s l29s l29s l29s l29s l29s l29s l29s l29s
-				s92l s92l s92l s92l s92l s92l s92l s92l s92l s92l
-
-				k38d k38d k38d k38d k38d k38d k38d k38d k38d k38d
-				d83k d83k d83k d83k d83k d83k d83k d83k d83k d83k
-
-				j47f j47f j47f j47f j47f j47f j47f j47f j47f j47f
-				f74j f74j f74j f74j f74j f74j f74j f74j f74j f74j
-
-				h56g h56g h56g h56g h56g h56g h56g h56g h56g h56g
-				g65h g65h g65h g65h g65h g65h g65h g65h g65h g65h
-			`,
+		function generateSimpleNumbers() {
+			const lettersRight = ';lkjh';
+			const lettersLeft = 'asdfg';
+			const digitsRight = '67890';
+			const digitsLeft = '12345';
+			
+			source.value = Array(8).fill(0)
+				.map(() => Array(10).fill(0).map(() => Math.random() > 0.5 ? (
+						getRandomLetter(lettersRight) + getRandomLetter(digitsLeft) + getRandomLetter(digitsRight) + getRandomLetter(lettersLeft)
+					): (
+						getRandomLetter(lettersLeft) + getRandomLetter(digitsRight) + getRandomLetter(digitsLeft) + getRandomLetter(lettersRight)
+					)
+				).join(' ')
+				)
+				.join('\n\n')
 		}
 		
+		function generateLearnNumbers() {
+			const variety = [
+				';10a', 'a01;',
+				'l29s', 's92l',
+				'k38d', 'd83k',
+				'j47f', 'f74j',
+				'h56g', 'g65h',
+			]
+			const list = [];
+			while (variety.length > 0) list.push(variety.splice(parseInt(Math.random() * variety.length), 1));
+			source.value = list.map(x => Array(10).fill(x).join(' ')).join('\n\n');
+		}
+		
+		function getRandomLetter(list) {
+			return list[parseInt(Math.random() * list.length)];
+		}
+				
 		window.addEventListener("load", () => source.focus());
 		window.addEventListener("load", doDance);
 	</script>
