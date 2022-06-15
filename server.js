@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const port = 3000
+
+app.set('port', (process.env.PORT || 5000))
+app.use(express.static(__dirname + '/public'))
 
 app.get('/lifecheck', (req, res) => {
-  res.send('Hello World!')
+  res.send('Pretty Healthy so far!')
 })
 
-app.use(express.static('public'))
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(app.get('port'), () => {
+  console.log(`The App listening on port ${app.get('port')}`)
 })
