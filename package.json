@@ -1,0 +1,23 @@
+{
+  "name": "blind-typing-trainer",
+  "version": "1.0.0",
+  "description": "A tool to help learn blind typing.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KPblCEHblLLl/blind-typing-trainer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KPblCEHblLLl/blind-typing-trainer/issues"
+  },
+  "homepage": "https://github.com/KPblCEHblLLl/blind-typing-trainer#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
