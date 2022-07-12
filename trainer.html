@@ -104,6 +104,7 @@
 				<option value='train_numbers'>train numbers</option>
 				<option value='simple_numbers'>simple numbers</option>
 				<option value='hard_numbers'>hard numbers</option>
+				<option value='right_pinky_trainer'>right pinky</option>
 			</select>
 		</section>
 		<section><textarea id="input"></textarea></section>
@@ -183,6 +184,9 @@
 					break;
 				case "hard_numbers":
 					generateHardNumbers();
+					break;
+				case "right_pinky_trainer":
+					getRightPinkyTrainer();
 					break;
 			}
 			startTask();
@@ -277,6 +281,16 @@
 			const list = [];
 			while (variety.length > 0) list.push(variety.splice(parseInt(Math.random() * variety.length), 1));
 			source.value = list.map(x => Array(10).fill(x).join(' ')).join('\n\n');
+		}
+		
+		function getRightPinkyTrainer() {
+			const parts = [
+				':[}]{;',
+				':\'_=+-\';',
+				':"(/\\?)";'
+
+			]
+			source.value = parts.map(x => Array(5).fill(x).join(' ')).join('\n\n');
 		}
 		
 		function getRandomLetter(list) {
